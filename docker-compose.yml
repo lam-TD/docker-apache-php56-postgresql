@@ -1,0 +1,25 @@
+version: '3.4'
+
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: app.dockerfile
+    working_dir: /var/www
+    volumes:
+      - ./app/:/var/www/html
+    ports:
+    - "9999:80"
+  db:
+    build:
+      context: ./
+      dockerfile: db.dockerfile
+    restart: always
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: db_translate
+      PGDATA: /var/lib/postgresql/data/9.6
+    ports:
+      - "5433:5432"
+  
